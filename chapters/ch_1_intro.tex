@@ -1,1 +1,18 @@
 \chapter{Introduction}
+% what is meshing ? why meshing and types of meshes ? 
+%delaunay meshes and explain use of good qualiy meshes
+Meshing is the process of discretization of polygonal or polyhedral domain into simpler geometric entities like triangles, quads, tetrahedra, hexahedra, etc such that differential equations can be solved for simpler entities to model some real world problems. These meshes are extensively used in FEA (Finite Element Analysis), FVM (Finite Volume Method) and computer graphics. Specially for FEA, FVM the accuracy of the results depends on the quality of the meshes. Good quality mesh has high number of good quality elements in the area of interest and less number of elements in other areas. Acceptable quality depends on the nature of problem and the desired accuracy, but generally speaking elements with very small or very large interior angles are
+not considered good quality.
+
+The art of generating meshes is known as grid generation. Meshes can be differentiated into structured, unstructured and hybrid grids. Structured grids have regular and symmetrical connectivity and are easier to code, but they are not able to adapt to complicated domains. Unstructured grids have irregular connectivity and they are somewhat harder to code, but they can easily adapt to complicated domains. Hybrid grids contain a mixture of structured and unstructured grids. Structure and hybrid grids are out of scope for this thesis and will not be discussed further.
+
+Among unstructured grid generation methods, delaunay based methods have been of special interest to researchers due to nice mathematical properties and guarantees. Algorithms for delaunay triangulation have been developed for 2D and 3D domains, but initial mesh is usually coarse and not useful for solvers. So, mesh is refined by adding more nodes to it in the areas of interest. 
+
+% smoothing in general and what is laplacian smoothing
+% motivation to develop smoothing algorithms
+Even after refinement process, if higher quality elements are desired, then mesh is passed through smoothing algorithms. Smoothing is process of improving the element quality without adding more vertices. This is generally done by relocating the mesh vertices to new locations such that elements around that vertex have improved quality. This is done iteratively for every vertex till desired mesh quality is reached or it can not be improved further. Smoothing can involve changing the connectivity of nodes and change in connectivity can improve quality dramatically but is slower than former.
+
+One of the simplest smoothing methods are based on laplacian methods. Laplacian based methods are generally easier to code and computationally inexpensive. These can be used as precursor to other expensive smoothing methods for faster convergence.
+In this thesis, I present a new laplacian based method for 2D due to % give credit to orignal author
+and further extend 2D method to 3D on tetrahedral meshes. The details of the implementation and analysis of this new method is provided in this thesis.
+
