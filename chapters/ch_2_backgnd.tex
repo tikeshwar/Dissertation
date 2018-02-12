@@ -1,2 +1,26 @@
 \chapter{Background}
+% section 1 : delaunay triangulation
+% delauanay property and its incremental construction
+\section{Delaunay Triangulation}
+Delaunay triangulation is method of triangulation where each triangle or tetrahedra obey delaunay crieteria. In 2D triangulation, if every triangle has empty circumcircle, then it is a delaunay triangulation. Similarly in 3D, if every tetrahedra has empty circumsphere, then it is delaunay. Empty circumcircle condition states that there is no point inside or on that circumcircle except the points of triangle t. This holds true for empty circumspheres.
+% some diagrams of delaunay triangulation with empty circumcircle
+
+For a point set in general position, there always exists a unique delaunay triangulation. In 2D, points are in general position when there are no set of 4 points such that they all lie on same circle. If they lie on same circle, then there is more than one way to connect those 4 points to form delaunay triangulation. To resolve this ambiguity, perturbation techniques are used.
+
+There are many ways to computer delaunay triangulation of a point set. Most notably being the incremental construction and divide-and-conquer. We will talk about incremental construction as that is easier to understand and code. There are two methods for incremental construction
+
+\subsection{Bowyer-Watson Algorithm}
+Bowyer-Watson algorithm inserts points one by one in already existing delaunay triangulation. To insert point p, first all the triangles are collected whose circumcicles contains p. The set of triangles are deleted to create a cavity. This cavity is re-triangulated with the p. The algorithm to easily extensible to higher dimensions. In 3D, all tetrahedra are deleted whose circumspheres contain p forming a cavity. This cavity is then re-tetrahedralized to update the delaunay tetrahedralization. 
+
+It is fairy easy to implement but is prone to robustness issues if robust predicates are not used. If points are not in general position, then bowyer-watson algorithm can lead to invalid triangulation due to floating point round-off errors. This can lead to catastrophic program crashes and failures.
+
+\subsection{Lawson flips Algorithm}
+
+
+% section 2 : delaunay tetrahedralization
+% delauany property in 3d and incremental watson and flip methods
+
+% section 3 : smoothing background, bit of history
+% ODT, CVT, angle based, couple more
+
 
