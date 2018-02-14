@@ -15,6 +15,22 @@ Bowyer-Watson algorithm inserts points one by one in already existing delaunay t
 It is fairy easy to implement but is prone to robustness issues if robust predicates are not used. If points are not in general position, then bowyer-watson algorithm can lead to invalid triangulation due to floating point round-off errors. This can lead to catastrophic program crashes and failures.
 
 \subsection{Lawson flips Algorithm}
+In 2D, the idea is to flip all non-delaunay edges in the triangulation. One can start with some arbitrary triangulation and then keep on flipping non-delaunay edges until all edges are delaunay. In incremental construction, a point p is inserted in following steps:
+1. First the triangle is found which contains triangulation.
+2. Each edge of that triangle is connected to the point to form 3 new triangles. Old triangle is deleted.
+3. Apply flipping to all the non-delaunay edges starting from the new triangles going outwards till no non-delaunay edge is left. Theoretically,it can take n2 flips, but in practice, it can be treated as constant.
+
+This flipping technique is quite useful in smoothing. After relocating every vertex to new position, flipping is used to restore delaunayness.
+
+Though the core of algorithm remains same in 3D but flipping is not straight forward in 3D as in 2D. In 3D, edges and faces both can be flipped. Unlike in 2D, not every non-delaunay configuration of edge/faces  can be flipped. There are two major flips in 3D. 
+1.2-3 flip : A face is flipped only when it is part of 2 tetras and all points of 2 tetra lie on the convex hull formed by the tetras. So, 2 tetras are flipped to give 3 tetras.
+2.3-2 flip : A edge is flipped only when it is part of 3 tetras.
+Here 3 tetras are combined to create 2 tetras.
+
+There are other flips also, 2-2 flip and 4-4 flip, which are useful in degenerate cases. If 4 tetra sharing an edge have degenerate points and 4 points are planar, then one of better configurations can be chosen. Same for 2-2 flip.
+
+For performing flips after relocation of vertex to new point, flips are useful in 3D similar to 2D. Delaunay by flips has one major advantage over Bowyer-watson that triangulation is always valid despite floating point errors. But in practice, flipping is slightly slower than former method.
+
 
 
 % section 2 : delaunay tetrahedralization
