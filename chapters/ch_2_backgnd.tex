@@ -14,7 +14,7 @@ Bowyer-Watson algorithm inserts points one by one in already existing delaunay t
 
 It is fairy easy to implement but is prone to robustness issues if robust predicates are not used. If points are not in general position, then bowyer-watson algorithm can lead to invalid triangulation due to floating point round-off errors. This can lead to catastrophic program crashes and failures.
 
-\subsection{Lawson flips Algorithm}
+\subsection{Lawson flip Algorithm}
 In 2D, the idea is to flip all non-delaunay edges in the triangulation. One can start with some arbitrary triangulation and then keep on flipping non-delaunay edges until all edges are delaunay. In incremental construction, a point p is inserted in following steps:
 1. First the triangle is found which contains triangulation.
 2. Each edge of that triangle is connected to the point to form 3 new triangles. Old triangle is deleted.
@@ -31,12 +31,19 @@ There are other flips also, 2-2 flip and 4-4 flip, which are useful in degenerat
 
 For performing flips after relocation of vertex to new point, flips are useful in 3D similar to 2D. Delaunay by flips has one major advantage over Bowyer-watson that triangulation is always valid despite floating point errors. But in practice, flipping is slightly slower than former method.
 
+\section{Smoothing Algorithms}
+Laplacian smoothing is one of the most popular smoothing schemes. It comprises of all those algorithms which relocates the vertex to weighted average of all incident vertices. This works only for convex domains so for non-convex domains,extra check of validity of mesh is performed. But still it is faster than other more sophisticated methods. 
 
-
-% section 2 : delaunay tetrahedralization
-% delauany property in 3d and incremental watson and flip methods
+In practice, smoothing is iterative method and is performed until certain threshold value is reached or certain number of iterations are done. There are many methods to perform smoothing, in the following sections, we describe some of the popular smoothing methods in 2D. 
 
 % section 3 : smoothing background, bit of history
 % ODT, CVT, angle based, couple more
+\subsection{Laplacian Smoothing}
+\subsection{Smart Laplacian Smoothing}
+\subsection{Angle Based Smoothing}
+\subsection{Centroidal Voronoi Tessellation Based Smoothing}
+\subsection{Optimal Delaunay Triangulation Based Smoothing}
+
+
 
 
