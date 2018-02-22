@@ -33,16 +33,46 @@ For performing flips after relocation of vertex to new point, flips are useful i
 
 \section{Smoothing Algorithms}
 Laplacian smoothing is one of the most popular smoothing schemes. It comprises of all those algorithms which relocates the vertex to weighted average of all incident vertices. This works only for convex domains so for non-convex domains,extra check of validity of mesh is performed. But still it is faster than other more sophisticated methods. 
+% formula
+\begin{eqnarray}
+x^*= \frac{1}{k} \sum_{x_j \in \Omega_i, x_j \neq x_i} x_j
+\end{eqnarray}
+% end formula
+where $x*$ is the new location, $x_i$ is the vertex in consideration, $\Omega_i$ is the star of the vertex.
 
 In practice, smoothing is iterative method and is performed until certain threshold value is reached or certain number of iterations are done. There are many methods to perform smoothing, in the following sections, we describe some of the popular smoothing methods in 2D. 
 
 % section 3 : smoothing background, bit of history
 % ODT, CVT, angle based, couple more
 \subsection{Laplacian Smoothing}
+In Laplacian smoothing, a vertex v is simply relocated to the centroid of the vertices connected to v. This centroid point can be treated as solution of spring torsion system. There is no guarantee for quality improvement and it might produce inverted elements. But it is simple and fast to implement and can give good results if number of iterations are less.
+% formula and images
+
 \subsection{Smart Laplacian Smoothing}
+Shortcomings of laplacian is addressed in this one. Relocation strategy is same but before relocating any vertex, vertex is passed through checks to see if it improves the quality of neighborhood simplices, otherwise vertex's current position is not changed. So, there is an extra check for quality evaluation but still this method is inexpensive and avoids inverted elements.
+
 \subsection{Angle Based Smoothing}
-\subsection{Centroidal Voronoi Tessellation Based Smoothing}
-\subsection{Optimal Delaunay Triangulation Based Smoothing}
+Angle based smoothing was given by Zhou and Shimada which tries to relocate the vertex to a position such that new position yields an optimum angle distribution on the angles formed by each side of the star.
+% draw a figure for better explanation.
+This method is computationally expensive than laplacian but offers better results and avoids creating inverted elements without extra checks. Finding optimum location is based on heuristics and notably there were two methods of finding new location due to Zhou and Shimada, Xu and Newman.
+
+\subsection{Centroidal Voronoi Tessellation (CVT) Based Smoothing}
+Centroidal Voronoi tessellation for a given point set is collection of voronoi cells such that each cell has centroid from the point set. CVT is applied in image analysis, flow control, dimension reduction etc. In mesh generation, CVT configuration of points provides an optimal distribution of points. CVT can be applied through LLoyd iterations to initial delaunay triangulation to improve the mesh quality. In each Lloyd iteration, voronoi regions of each point p is calculated and p is relocated to centoid of the voronoi region given by 
+% figure and formula
+\begin{eqnarray}
+x^*= \frac{1}{|\Omega_i|} \sum_{T_j \in \Omega_i} |T_j|C_j
+\end{eqnarray}
+% end formula
+where  $x^*$ is the new location, $|\Omega_i|$ is the star of the point and $T_j$ is $j$th triangle of star, $|.|$ denotes the area in 2 dimension and $C_j$ is the circumcenter of $j$th triangle. There are other methods based on CVT, but Lloyd iterations are suitable for mesh smoothing despite its slow convergence.
+
+\subsection{Optimal Delaunay Triangulation (ODT) Based Smoothing}
+Delaunay triangulation minimizes the interpolation error for the function $|x|^2$ among all the triangulations for a given set of points. So, for the function $f(x) = |x|^2$, ODT is the triangulation with least error. Chen and Xu studied and proved that this definition can be used to devise an smoothing strategy. They found a unique solution to the interpolation error which results in new location as given by
+% formula for new location	
+\begin{eqnarray}
+x^*=-\frac{1}{2|\Omega_i|} \sum_{T_j \in \Omega_i}(\nabla |T_j(x)| \sum_{x_k \in T_j, x_k \neq x_i} |x|^2)
+\end{eqnarray}
+% end formula
+In the above equation $x^*$ is the new location, $|\Omega_i|$ is the star of the point and $T_j$ is $j$th triangle of star. Its convergence is slower than laplacian methods 
 
 
 
