@@ -1,6 +1,9 @@
 # ignore an entire directory
 # /mydebugdir/
 
+# ignore folder
+/images
+
 # ignore a file type
 *.bak
 *.toc
