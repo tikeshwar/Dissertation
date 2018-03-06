@@ -8,3 +8,6 @@
 *.log
 *.pdf
 *.gz
+*.bbl
+*.blg
+*.lof
