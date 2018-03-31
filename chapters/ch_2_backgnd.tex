@@ -158,6 +158,57 @@ x^*=-\frac{1}{2|\Omega_i|} \sum_{T_j \in \Omega_i}(\nabla |T_j(x)| \sum_{x_k \in
 % end formula
 In the above equation $x^*$ is the new location, $|\Omega_i|$ is the star of the point and $T_j$ is $j$th triangle of star. Its convergence is slower than laplacian methods 
 
+\subsection{Aspect Ratio Based smoothing}
+Aspect ratio based smoothing \cite{arbased} method is laplacian based which aims to improve mesh quality by targeting aspect ratios of the triangles incident at a vertex. The idea is that inside the star region of each vertex, move the center vertex along the circumcircle of each incident triangle in a direction that will decrease the difference between each pair of adjacent interior edges.
+% images with more details
+
+\section{Quality metrics}
+Quality of an element of a mesh is its suitability and accuracy in the simulation. Generally, very small or very large angles between edges or faces can impact accuracy and speed, so angles closer to equilateral elements are desired. Various quality metrics are used throughout meshing community, below are the most commonly used.
+
+\begin{table}[ht]
+\caption{Metrics table}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Metric & Triangle & Tetrahedron \\ 
+\hline
+Aspect Ratio & $\frac{R}{2\sqrt{3}L}$ & $\frac{R}{2\sqrt{6}L}$ \\ 
+\hline
+Radius Ratio & $\frac{R}{2r}$ & $\frac{R}{3r}$ \\ 
+\hline
+Min Angle 	 & min of 3 internal angles & min of 6 dihedral angles  \\ 
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Below are the ideal values for the metrics
+
+\begin{table}[ht]
+\caption{Ideal value table}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Metric & Triangle & Tetrahedron \\ 
+\hline
+Aspect Ratio & 1.0 & 1.0 \\ 
+\hline
+Radius Ratio & 1.0 & 1.0 \\ 
+\hline
+Min Angle (deg)	& 60 & 70.528  \\ 
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+It has been shown that these metrics are related to each other and bound on one metric bounds the other metric. Aspect ratio or radius ratio is primarily used in refinement stage in 2D and 3D. In 3D, there are really flat tetrahedra called slivers whose aspect ratios are good so aspect ratio or radius ratio are not good measures for finding slivers. Like slivers, there are other type of bad tetrahedra as shown in 
+
+% figure for bad tetrahedra
+
+
+
+
+
 
 
 

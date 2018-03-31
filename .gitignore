@@ -2,7 +2,7 @@
 # /mydebugdir/
 
 # ignore folder
-/images
+/images/*
 
 # ignore a file type
 *.bak
