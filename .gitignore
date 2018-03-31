@@ -9,8 +9,10 @@
 *.toc
 *.aux
 *.log
-*.pdf
 *.gz
 *.bbl
 *.blg
 *.lof
+
+# ignore specific file
+thesis.pdf
