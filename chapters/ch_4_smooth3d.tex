@@ -1,1 +1,59 @@
-\chapter{Smoothing Algorithm 3D}
+\chapter{Smoothing Methodology}
+Vertex smoothening can easily lead to inverted elements if proper measures are not taken. In theory, smoothening algorithms are applied to convex star of the vertex \cite{chen&xu} as shown in \ref{fig:convex} and convex star can be calculated using linear programming. But this is an expensive operation considering the fact that our smoothing methods are relatively simple. So to avoid inverted elements, we simply avoid relocating to new vertex if new location leads to inverted elements in 2D or 3D. Furthermore, we immediately delaunize the new location which works well in 2D and is theoretically guaranteed. But in 3D, due to possible existence of slivers, it's only partly true and that's why 3D delaunay meshes are sometimes pseudo delaunay, nevertheless they possess many of good qualities of delaunay triangulation.
+
+To prove the effectiveness of delaunizing immediately, we compared it with smoothing without flipping. We observed that naively moving the vertex to new location can sometimes worsen the mesh.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{images/convex.pdf}
+    \caption{Feasible region in local Patch \cite{chen&xu}}
+    \label{fig:convex}
+\end{figure}
+
+
+We decided to move the vertex to new location only when it improves the minimum quality measure of star region of the vertex. We can afford to have new location which may deteriorate the minimum quality only when vertex is delaunized immediately. Results are discussed in detail in results section. Considering these factors results to following smoothing framework.
+
+\begin{algorithm}[tbh]
+\caption{smoothening}
+\begin{algorithmic}
+\WHILE {$i\leq iterations$}
+	\FOR {\texttt{every inner vertex $v$}}
+		\STATE $\Omega \gets \texttt{star region of $v$}$
+		\STATE $v* \gets smoothing(v, \Omega)$
+		\IF {$acceptable(v*, v, \Omega)$}
+			\STATE $v \gets v*$
+			\STATE $delaunaize(v*)$
+		\ENDIF
+	\ENDFOR
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[tbh]
+\caption{acceptable($v*$, $v$, $\Omega$)}
+\begin{algorithmic}
+\IF {$ invertedElements(v*) $}
+	\STATE $return\ false$
+\ENDIF
+\STATE $curq \gets minimumQualityElement(v, \Omega)$
+\STATE $minq \gets minimumQualityElement(v*, \Omega)$
+\IF {$curq \leq minq$}
+	\STATE $return\ false$
+\ENDIF
+\STATE $return\ true$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[tbh]
+\caption{delaunize($v$)}
+\begin{algorithmic}
+\STATE $queue \gets\ all\ non-delaunay\ edges/faces$
+\WHILE {$queue\ \texttt{is not empty}$}
+	\STATE $e \gets dequeueTop()$
+	\IF {$checkIfDelaunay(e)$}
+		\STATE $\lambda \gets delaunayFlip(e)$
+		\STATE $enqueue(\lambda)$
+	\ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}

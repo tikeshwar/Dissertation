@@ -1,49 +1,172 @@
 \chapter{Results and Discussions}
-In this section we will compare the results our smoothing algorithm with other leplacian smoothing algorithms for 2D and 3D meshes. We will discuss the results based on aspect ratio distribution and min angle criteria, though aspect ratio and min angle are related for triangular and tetrahedral meshes.
+In this section we will compare the results our smoothing algorithms with one other with and without flipping for 2D and 3D. First we present a comparison of smoothing algorithms in terms of speed, quality and grading of the meshes on the scale of Poor < Medium < Good. Then We will show the results based on distribution of min angles and radius ratios. First on the left are mesh output, middle figures are distribution of min angles and right figures are distribution of radius ratios. All iteration smoothing are performed on interior vertices. Handling of boundary vertices need extra care and need extension in algorithms \cite{Erten_2009} to accommodate that.
 
-Figure \ref{fig:points_1000} shows our smoothing algorithm with and without flipping for smart laplacian and our aspect ratio based smoothing. Square contains approximately  100 points and original figure shows the delaunay points. It's a bad triangulation to start with but effectiveness of our algorithm can be seen from comparing laplacian with flipping and our algorithm with flipping. Laplacian is very efficient for 2D triangular meshes as it can be seen in Figure \ref{fig:points_1000}(c). Our algorithm improves upon the smart laplacian and distributes the area and min angles much  better than smart laplacian shown in Figure \ref{fig:points_1000}(e).
+\section{Smoothing on 2D mesh}
+Figure \ref{fig:2d} shows smoothing algorithms with flipping. The square contains approximately 300 points and original figure \ref{fig:original_2d} shows the unsmoothed delaunay triangulation. It's a bad triangulation to start with but effectiveness of algorithms can be seen from mesh output. 
 
-\begin{figure}[h]
+\begin{table}[ht]
+\caption{Qualitative comparison of smoothing methods in 2D}
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+Smoothing method & Ease of Implementation & Speed & Quality & Grading \\ 
+\hline
+Smart Laplacian & Good & Good & Medium & Good \\ 
+\hline
+Optimal Delaunay Triangulation based & Medium & Good & Good & Poor \\ 
+\hline
+Aspect ratio based & Medium & Medium & Good & Poor  \\ 
+\hline
+Average circumcenter & Good & Medium & Good & Good  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[H]
     \centering
-    \begin{subfigure}[h]{1.0\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/original_1000.png}
-        \caption{Original}
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/2d/original_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/original_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/original_radius_ratio.pdf}
+        \caption{Origianl}       
+        \label{fig:original_2d}  
     \end{subfigure}
-    \vspace{0.5 cm}
-
-    \begin{subfigure}[h]{1.0\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/laplacian_no_flips_1000.png}
-        \caption{Smart Laplacian without flips}
-    \end{subfigure}
-    \vspace{0.5 cm}
- 
-    \begin{subfigure}[h]{1.0\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/laplacian_1000.png}
-        \caption{Smart Laplacian with flips}
-    \end{subfigure}
-	\vspace{0.5 cm}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\ContinuedFloat
     \centering
-   	\begin{subfigure}[h]{1.0\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/aspect_ratio_no_flips_1000.png}
-        \caption{Aspect Ratio Based without flips}
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/2d/laplacian_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/laplacian_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/laplacian_radius_ratio.pdf}
+        \caption{Smart laplacian}       
+        \label{fig:avg_sl_2d}        
     \end{subfigure}
-	\vspace{0.5 cm}
-   
-    \begin{subfigure}[h]{1.0\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/aspect_ratio_1000.png}
-        \caption{Aspect Ratio Based with flips}    
-    \end{subfigure}	  	
-    \caption{Delaunay mesh of square having 1000 vertices}
-    \label{fig:points_1000}
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/2d/odt_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/odt_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/odt_radius_ratio.pdf}
+        \caption{Optimal delaunay triangulation}       
+        \label{fig:odt_2d}        
+    \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/2d/aspect_ratio_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/aspect_ratio_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/aspect_ratio_radius_ratio.pdf}
+        \caption{Aspect ratio based}       
+        \label{fig:avg_ar_2d}
+    \end{subfigure} 
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/2d/average_circumcenter_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/average_circumcenter_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/2d/average_circumcenter_radius_ratio.pdf}
+        \caption{Average circumcenter}       
+        \label{fig:avg_cc_2d}
+    \end{subfigure}
+    \caption{Smoothing result on 2D mesh}
+    \label{fig:2d}
+    \vspace{0.5 cm}
+\end{figure}
+
+\section{Smoothing on 3D mesh}
+Figure \ref{fig:3d} shows smoothing algorithms with flipping in 3D. The mesh shown is of cylinder with approximately 1000 vertices, most of them are on the surface. Original figure \ref{fig:original_3d} shows the unsmoothed delaunay tetrahedralization. It's a refined mesh to start with but still smoothing improves the overall quality of the mesh.
+
+\begin{table}[ht]
+\caption{Qualitative comparison of smoothing methods in 3D}
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+Smoothing method & Ease of Implementation & Speed & Quality & Grading \\ 
+\hline
+Smart Laplacian & Good & Good & Poor & Poor \\ 
+\hline
+Optimal Delaunay Triangulation based & Medium & Medium & Good & Poor \\ 
+\hline
+Aspect ratio based & Medium & Medium & Good & Poor  \\ 
+\hline
+Average circumcenter & Good & Good & Good & Good  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/3d/original_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/original_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/original_radius_ratio.pdf}
+        \caption{Origianl}       
+        \label{fig:original_3d}  
+    \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/3d/laplacian_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/laplacian_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/laplacian_radius_ratio.pdf}
+        \caption{Smart laplacian}       
+        \label{fig:avg_sl_3d}        
+    \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/3d/odt_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/odt_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/odt_radius_ratio.pdf}
+        \caption{Optimal delaunay triangulation}       
+        \label{fig:odt_3d}        
+    \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/3d/aspect_ratio_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/aspect_ratio_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/aspect_ratio_radius_ratio.pdf}
+        \caption{Aspect ratio based}       
+        \label{fig:avg_ar_3d}
+    \end{subfigure} 
+\end{figure}
+
+\begin{figure}[H]
+	\ContinuedFloat
+    \centering
+    \begin{subfigure}[b]{1.0\textwidth}
+        \includegraphics[width=0.32\textwidth]{images/3d/average_circumcenter_m.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/average_circumcenter_min_angle.pdf}
+        \includegraphics[width=0.32\textwidth]{images/3d/average_circumcenter_radius_ratio.pdf}
+        \caption{Average circumcenter}       
+        \label{fig:avg_cc_3d}
+    \end{subfigure}
+    \caption{Smoothing results on 3D mesh}
+    \label{fig:3d}
+    \vspace{0.5 cm}
 \end{figure}
 
 \section{Implementation Details}

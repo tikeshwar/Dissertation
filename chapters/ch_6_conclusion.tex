@@ -1,1 +1,15 @@
 \chapter{Conclusion and Future Work}
+The thesis presents a comparative study of smoothing methods that are not computationally expensive and improves the original mesh effectively. The laplacian based methods can be used as precursor to more computationally expensive methods. As laplacian is based on heuristics, it can not be guaranteed that for every shape and size of model, they are effective. But in practice, they perform well and are faster. 
+
+\section{2D methods}
+Results section showed that flipping right after vertex relocation produces better quality meshes. For 2D meshes, flipping works very well as it has been shown that delaunay meshes maximizes the minimum angle and flipping restores the delaunayness of the vertex in consideration. Of the four methods, ODT produced mesh with most triangles with closer to equilateral. speed wise, ODT is the slowest one taking more to converge to given epsilon displacement. 
+
+Aspect ratio based method is comparable to ODT and slightly faster than ODT. Average circumcenter method is able to maintain some grading of the meshes and given some mesh density function, laplcian and average circumcenter can easily to modified as per mesh density.
+
+\section{3D methods}
+For 3D meshes, slivers are big problem and can not be avoided either in refining or in smoothing stages. Smoothing can help reduce the number of bad elements as seen in the case of average circumcenter for 3D meshes. Still, a post process of slivers is advised after performing smoothing stage. Naive implementation of flipping after vertex relocation can aggravate the sliver situation. This is evident from the fact that in 3D, flipping is not guaranteed to restore delaunayness of the star polyhedron of the vertex, that's why in 3D, we have psuedo delaunay. Also, slivers are formed even in delaunay based configurations of vertices. While flipping, an extra check is needed to make sure that current configuration is free from slivers, that adds to the cost of the methods.
+
+Overall, ODT performs well for 2D with immediate flipping and average circumcenter for 3D meshes.
+
+\section{Future work}
+We have implemented a direct extension of aspect ratio based smoothing\ref{fig:non_general_pos} and compared other cost effective smoothing methods without caring for the vertices on or near the boundary. In future, we would like to extend these methods for boundary. Especially for tetrahedral meshes, handling of boundaries are challenging even for simple smoothing methods. Also, we would like to see how these methods can be extended to quad and hex meshes.

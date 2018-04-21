@@ -160,7 +160,16 @@ In the above equation $x^*$ is the new location, $|\Omega_i|$ is the star of the
 
 \subsection{Aspect Ratio Based smoothing}
 Aspect ratio based smoothing \cite{arbased} method is laplacian based which aims to improve mesh quality by targeting aspect ratios of the triangles incident at a vertex. The idea is that inside the star region of each vertex, move the center vertex along the circumcircle of each incident triangle in a direction that will decrease the difference between each pair of adjacent interior edges.
+
 % images with more details
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{images/arbased.pdf}
+	\caption{Moving $V$ to $Vnew$}
+	\label{fig:arbased}
+\end{figure}
+
+In the star polygon of a vertex, new location $Vnew$ is calculated for every incident triangle whole if two incident edges has a ratio higher than 1.5 as shown in the \ref{fig:arbased}. If $Vnew$ decreases the shortest distance from the vertex to the star polygon, then only $Vnew$ is accepted. New location is calculated as the average of all new vertices.
 
 \section{Quality metrics}
 Quality of an element of a mesh is its suitability and accuracy in the simulation. Generally, very small or very large angles between edges or faces can impact accuracy and speed, so angles closer to equilateral elements are desired. Various quality metrics are used throughout meshing community, below are the most commonly used.
